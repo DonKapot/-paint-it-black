@@ -1,6 +1,33 @@
 {
-  "name": "Paint it black",
-  "version": "1.0",
-  "description": "Paint In Black(PIB). Turn any site to darktheme!",
-  "manifest_version": 2
+    "name": "Paint it black",
+    "short_name": "PiB",
+    "version": "1.0",
+    "manifest_version": 2,
+    "description": "Paint In Black(PiB). Turn any site to darktheme!",
+    "author": "Alexei Danilin",
+    "permissions": [
+        "activeTab",
+        "declarativeContent",
+        "storage"
+    ],
+    "options_page": "src/options/options.html",
+    "background": {
+        "scripts": ["src/main.js"],
+        "persistent": false
+    },
+    "page_action": {
+        "default_popup": "src/popup/popup.html",
+        "default_icon": {
+            "16": "public/img/ico.png",
+            "32": "public/img/ico.png",
+            "48": "public/img/ico.png",
+            "128": "public/img/ico.png"
+        }
+    },
+    "icons": {
+        "16": "public/img/ico.png",
+        "32": "public/img/ico.png",
+        "48": "public/img/ico.png",
+        "128": "public/img/ico.png"
+    }
 }
