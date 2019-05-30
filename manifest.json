@@ -29,5 +29,9 @@
         "32": "public/img/ico.png",
         "48": "public/img/ico.png",
         "128": "public/img/ico.png"
-    }
+    },
+    "content_scripts": [{
+        "matches": ["http://*/*", "https://*/*"],
+        "js": ["src/services/parser.js"]
+    }]
 }
