@@ -1,58 +1,63 @@
-console.dir(document.body);
+function parseDom(_domArr, callback) {
 
-let dom = [];
+  let inputDom = _domArr !== "undefined" ? _domArr : document.body.children;
 
-function getStyle(el) {
+  function getStyle(el) {
     let style = getComputedStyle(el);
     return {
-        'backgroundColor': style.backgroundColor,
-        'color': style.color,
-        'borderColor': style.borderColor
+      'backgroundColor': style.backgroundColor,
+      'color': style.color,
+      'borderColor': style.borderColor
     }
-}
+  }
 
-// function getChildren(el) {
-//     let count = 0;
-//     if (el.children.length > 0 && count <= 2) {
-//         count++;
-//         getChildren(el);
-//     } else {
-//         return [];
-//     }
-// }
-
-function getPath(el) {
+  function getPath(el) {
     let elemClassName = !el.className ? '' : `.${el.className.split(' ').join('.')}`;
     let elemId = !el.id ? '' : `#${el.id}`;
     return `${el.tagName}${elemClassName}${elemId}`
-}
+  }
 
-function getElement(el) {
-
+  function getElement(el) {
     return {
-        id: Symbol(),
-        elemTag: el.tagName,
-        elemPath: getPath(el),
-        elemParentPath: getPath(el.parentElement),
-        elemStyle: getStyle(el),
-        elemChildrens: []
+      id: Symbol(),
+      elemTag: el.tagName,
+      elemParentPath: getPath(el.parentElement),
+      elemPath: getPath(el),
+      elemStyle: getStyle(el),
+      elemChildrens: []
     };
-}
+  }
 
-for (element of document.body.children) {
-    let mainElement = getElement(element);
-
-    if (mainElement.elemTag !== "SCRIPT") {
+  function parse(arr) {
+    let dom = [];
+    for (let i=0; i<arr.length; i++) {
+      let element = arr[i];
+      let mainElement = getElement(element);
+      let check = mainElement.elemTag !== "SCRIPT" && element.children.length > 0;
+      if (check) {
+        // let counter = 0;
+        // let fullBranch = true;
+        // while(counter < 5) {
+        //   counter++;
+        // }
         dom.push(getElement(element));
+        // console.log(element);
+      }
+      if (typeof callback === "function") {
+        callback(element);
+      }
     }
+    return dom;
+  }
+  return parse(inputDom);
 }
 
-chrome.runtime.sendMessage({
-    from: 'PARSER',
-    subject: 'send.dom',
-    DOM: dom
-});
-
-var DOM = dom;
+let DOM = parseDom(document.body.children);
 
 console.dir(DOM);
+
+// chrome.runtime.sendMessage({
+//   from: 'PARSER',
+//   subject: 'send.dom',
+//   DOM: DOM
+// });
