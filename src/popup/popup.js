@@ -8,25 +8,25 @@
  //      file: 'src/services/parser.js'
  //  });
 
- chrome.runtime.onMessage.addListener(function(msg) {
-     if ((msg.from === 'PARSER') && (msg.subject === 'send.dom')) {
-         console.log(msg);
-     }
- });
+//  chrome.runtime.onMessage.addListener(function(msg) {
+//      if ((msg.from === 'PARSER') && (msg.subject === 'send.dom')) {
+//          console.log(msg);
+//      }
+//  });
 
  chrome.storage.sync.get('color', function(data) {
      changeColor.style.backgroundColor = data.color;
      changeColor.setAttribute('value', data.color);
  });
 
- //  for (let btn of buttons) {
- //      btn.addEventListener('click', (e) => {
- //          console.log("***");
- //          chrome.tabs.executeScript({
- //              file: 'src/services/parser.js'
- //          });
- //      });
- //  }
+  // for (let btn of buttons) {
+  //     btn.addEventListener('click', (e) => {
+  //         console.log("***");
+  //         chrome.tabs.executeScript({
+  //             file: 'src/services/parser.js'
+  //         });
+  //     });
+  // }
 
  changeColor.addEventListener('click', (e) => {
      console.log("aaaaa");
@@ -41,5 +41,5 @@
  });
 
  resetColor.addEventListener('click', (e) => {
-     console.log("ooooo");
+     console.log("ooooo0000");
  });
