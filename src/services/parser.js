@@ -27,19 +27,22 @@ class Dom {
   constructor(_domArr) {
     this.inputDom = typeof _domArr !== "undefined" ? _domArr : document.body.children;
     this.dom = [];
-    this.backColors = [];
-    this.fontColors = [];
     if (typeof _domArr !== "object"){
       this.parseDom();
     }
-  }
-
-  getColors(arr) {
-    if(typeof arr !== "undefined") {
-      for (let i=0; i<arr.length; i++) {
-        let element = arr[i];
-      }
-    }
+    this.colors = {
+      back: this.dom
+      .map(el=>el.style.backgroundColor)
+      .filter((color,i,arr)=>!arr.includes(color,i+1)),
+      font: this.dom
+      .map(el=>el.style.color)
+      .filter((color,i,arr)=>!arr.includes(color,i+1)),
+      border: this.dom
+      .map(el=>el.style.borderColor)
+      .filter((color,i,arr)=>!arr.includes(color,i+1))
+    };
+    this.mainColors = [...this.colors.back, ...this.colors.font, ...this.colors.border]
+    .filter((color,i,arr)=>!arr.includes(color,i+1));
   }
 
   parseDom(_arr) {
@@ -59,7 +62,6 @@ class Dom {
         }
       }
     }
-
   }
 }
 
