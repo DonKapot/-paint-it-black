@@ -27,22 +27,23 @@ class Dom {
   constructor(_domArr) {
     this.inputDom = typeof _domArr !== "undefined" ? _domArr : document.body.children;
     this.dom = [];
+    
     if (typeof _domArr !== "object"){
       this.parseDom();
     }
+
     this.colors = {
-      back: this.dom
-      .map(el=>el.style.backgroundColor)
-      .filter((color,i,arr)=>!arr.includes(color,i+1)),
-      font: this.dom
-      .map(el=>el.style.color)
-      .filter((color,i,arr)=>!arr.includes(color,i+1)),
-      border: this.dom
-      .map(el=>el.style.borderColor)
-      .filter((color,i,arr)=>!arr.includes(color,i+1))
+      back: this.getStyleProp("backgroundColor"),
+      font: this.getStyleProp("color"),
+      border: this.getStyleProp("borderColor")
     };
+
     this.mainColors = [...this.colors.back, ...this.colors.font, ...this.colors.border]
-    .filter((color,i,arr)=>!arr.includes(color,i+1));
+      .filter((color,i,arr)=>!arr.includes(color,i+1));
+  }
+
+  getStyleProp(styleProp) {
+    return this.dom.map(el=>el.style[styleProp]).filter((color,i,arr)=>!arr.includes(color,i+1));
   }
 
   parseDom(_arr) {
