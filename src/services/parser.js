@@ -66,6 +66,22 @@ class Dom {
       }
     }
   }
+  /**
+   * Change color of elemet on page
+   * @param {string} color - string with color code e.g. '#FFF'
+   * 
+  */
+  changeColor(elementObj) {
+    // elementObj.node.style.backgroundColor = "#FFF";
+  }
+  /**
+   * change color of each element on page
+   * 
+  */
+  changeColors() {
+    let domArr = [...this.dom];
+    domArr.map(elementObj=>changeColor(elementObj));
+  }
 }
 
 let DOM = new Dom();
