@@ -24,11 +24,11 @@ class Element {
 }
 
 class Dom {
-  constructor(_domArr) {
-    this.inputDom = typeof _domArr !== "undefined" ? _domArr : document.body.children;
+  constructor(_inputDom) {
+    this.inputDom = typeof _inputDom !== "undefined" ? _inputDom : document.body.children;
     this.dom = [];
     
-    if (typeof _domArr !== "object"){
+    if (typeof _inputDom !== "object"){
       this.parseDom();
     }
 
@@ -43,11 +43,12 @@ class Dom {
   }
 
   getStyleProp(styleProp) {
-    return this.dom.map(el=>el.style[styleProp]).filter((color,i,arr)=>!arr.includes(color,i+1));
+    let domArr = [...this.dom];
+    return domArr.map(el=>el.style[styleProp]).filter((color,i,arr)=>!arr.includes(color,i+1));
   }
 
   parseDom(_arr) {
-    let inputArr = typeof _arr !== "undefined" ? _arr : this.inputDom;
+    let inputArr = typeof _arr !== "undefined" ? _arr : [...this.inputDom];
 
     for (let i=0; i<inputArr.length; i++) {
       let element = inputArr[i];
@@ -58,6 +59,7 @@ class Dom {
 
       if (isValid && isVisible && typeof isNodeExist === "undefined") {
         this.dom.push(node);
+        
         if (element.children.length > 0) {
           this.parseDom(element.children);
         }
@@ -68,6 +70,7 @@ class Dom {
 
 let DOM = new Dom();
 console.dir(DOM);
+// DOM.changeColors();
 
 // chrome.runtime.sendMessage({
 //   from: 'PARSER',
