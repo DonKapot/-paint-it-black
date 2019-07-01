@@ -1,0 +1,29 @@
+{
+  "name": "paint-it-black",
+  "version": "1.0.0",
+  "description": "Darken your sie",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DonKapot/paint-it-black.git"
+  },
+  "keywords": [
+    "chrome",
+    "extension",
+    "color",
+    "dark",
+    "themw"
+  ],
+  "author": "Alexei Danilin",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/DonKapot/paint-it-black/issues"
+  },
+  "homepage": "https://github.com/DonKapot/paint-it-black#readme",
+  "dependencies": {
+    "color": "^3.1.2"
+  }
+}
