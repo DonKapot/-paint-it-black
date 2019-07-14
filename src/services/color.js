@@ -1,6 +1,4 @@
-(function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
-let Color = require('color');
-},{"color":7}],2:[function(require,module,exports){
+require=(function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
 /* MIT license */
 var cssKeywords = require('color-name');
 
@@ -870,7 +868,7 @@ convert.rgb.gray = function (rgb) {
 	return [val / 255 * 100];
 };
 
-},{"color-name":5}],3:[function(require,module,exports){
+},{"color-name":4}],2:[function(require,module,exports){
 var conversions = require('./conversions');
 var route = require('./route');
 
@@ -950,7 +948,7 @@ models.forEach(function (fromModel) {
 
 module.exports = convert;
 
-},{"./conversions":2,"./route":4}],4:[function(require,module,exports){
+},{"./conversions":1,"./route":3}],3:[function(require,module,exports){
 var conversions = require('./conversions');
 
 /*
@@ -1049,7 +1047,7 @@ module.exports = function (fromModel) {
 };
 
 
-},{"./conversions":2}],5:[function(require,module,exports){
+},{"./conversions":1}],4:[function(require,module,exports){
 'use strict'
 
 module.exports = {
@@ -1203,7 +1201,7 @@ module.exports = {
 	"yellowgreen": [154, 205, 50]
 };
 
-},{}],6:[function(require,module,exports){
+},{}],5:[function(require,module,exports){
 /* MIT license */
 var colorNames = require('color-name');
 var swizzle = require('simple-swizzle');
@@ -1439,7 +1437,49 @@ function hexDouble(num) {
 	return (str.length < 2) ? '0' + str : str;
 }
 
-},{"color-name":5,"simple-swizzle":9}],7:[function(require,module,exports){
+},{"color-name":4,"simple-swizzle":7}],6:[function(require,module,exports){
+module.exports = function isArrayish(obj) {
+	if (!obj || typeof obj === 'string') {
+		return false;
+	}
+
+	return obj instanceof Array || Array.isArray(obj) ||
+		(obj.length >= 0 && (obj.splice instanceof Function ||
+			(Object.getOwnPropertyDescriptor(obj, (obj.length - 1)) && obj.constructor.name !== 'String')));
+};
+
+},{}],7:[function(require,module,exports){
+'use strict';
+
+var isArrayish = require('is-arrayish');
+
+var concat = Array.prototype.concat;
+var slice = Array.prototype.slice;
+
+var swizzle = module.exports = function swizzle(args) {
+	var results = [];
+
+	for (var i = 0, len = args.length; i < len; i++) {
+		var arg = args[i];
+
+		if (isArrayish(arg)) {
+			// http://jsperf.com/javascript-array-concat-vs-push/98
+			results = concat.call(results, slice.call(arg));
+		} else {
+			results.push(arg);
+		}
+	}
+
+	return results;
+};
+
+swizzle.wrap = function (fn) {
+	return function () {
+		return fn(swizzle(arguments));
+	};
+};
+
+},{"is-arrayish":6}],"color":[function(require,module,exports){
 'use strict';
 
 var colorString = require('color-string');
@@ -1923,46 +1963,4 @@ function zeroArray(arr, length) {
 
 module.exports = Color;
 
-},{"color-convert":3,"color-string":6}],8:[function(require,module,exports){
-module.exports = function isArrayish(obj) {
-	if (!obj || typeof obj === 'string') {
-		return false;
-	}
-
-	return obj instanceof Array || Array.isArray(obj) ||
-		(obj.length >= 0 && (obj.splice instanceof Function ||
-			(Object.getOwnPropertyDescriptor(obj, (obj.length - 1)) && obj.constructor.name !== 'String')));
-};
-
-},{}],9:[function(require,module,exports){
-'use strict';
-
-var isArrayish = require('is-arrayish');
-
-var concat = Array.prototype.concat;
-var slice = Array.prototype.slice;
-
-var swizzle = module.exports = function swizzle(args) {
-	var results = [];
-
-	for (var i = 0, len = args.length; i < len; i++) {
-		var arg = args[i];
-
-		if (isArrayish(arg)) {
-			// http://jsperf.com/javascript-array-concat-vs-push/98
-			results = concat.call(results, slice.call(arg));
-		} else {
-			results.push(arg);
-		}
-	}
-
-	return results;
-};
-
-swizzle.wrap = function (fn) {
-	return function () {
-		return fn(swizzle(arguments));
-	};
-};
-
-},{"is-arrayish":8}]},{},[1]);
+},{"color-convert":2,"color-string":5}]},{},[]);

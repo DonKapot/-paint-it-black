@@ -1,3 +1,6 @@
+let Color = require('color');
+console.log(Color('rgb(255, 255, 255)'));
+
 class Element {
   constructor(el) {
     this.inputEl = typeof el !== "undefined" ? el : document.querySelector("div");

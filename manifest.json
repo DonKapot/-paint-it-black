@@ -32,6 +32,6 @@
     },
     "content_scripts": [{
         "matches": ["http://*/*", "https://*/*"],
-        "js": ["src/services/parser.js"]
+        "js": ["src/services/color.js", "src/services/parser.js"]
     }]
 }
