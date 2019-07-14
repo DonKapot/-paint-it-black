@@ -1,3 +1,4 @@
+(function(){
 let Color = require('color');
 console.log(Color('rgb(255, 255, 255)'));
 
@@ -96,3 +97,4 @@ console.dir(DOM);
 //   subject: 'send.dom',
 //   DOM: DOM
 // });
+})()

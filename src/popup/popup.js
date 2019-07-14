@@ -4,9 +4,9 @@
  let buttons = document.querySelectorAll('button');
 
 
-  // chrome.tabs.executeScript({
-  //     file: 'src/services/parser.js'
-  // });
+// chrome.tabs.executeScript({
+//       file: 'src/services/parser.js'
+// });
 
 //  chrome.tabs.executeScript(tab.id, {code:
 //   "document.body.appendChild(document.createElement('link')).href = 'https://example.com/script.js';"
