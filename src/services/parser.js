@@ -89,11 +89,12 @@
   }
 
   let DOM = new Dom();
-  console.dir("Hello from parser console");
+  
+  console.log("Hello from parser console");
 
   chrome.runtime.sendMessage({
     from: 'PARSER',
     subject: 'send.initDom',
-    data: DOM
+    initDom: DOM
   });
 })()
