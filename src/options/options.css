@@ -1,0 +1,13 @@
+body {
+    font-style: oblique;
+    font-size: xx-large;
+    font-weight: bold;
+    font-family: fantasy;
+}
+
+button {
+    min-height: 30px;
+    min-width: 100px;
+    outline: none;
+    margin: 10px;
+}
