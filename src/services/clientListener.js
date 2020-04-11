@@ -1,3 +1,3 @@
-chrome.runtime.onMessage.addListener(function(msg) {
-    console.log('client Listener', msg);
+chrome.runtime.onMessage.addListener(function(listenerData) {
+    console.log('client Listener', listenerData);
 });

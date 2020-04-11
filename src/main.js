@@ -9,7 +9,6 @@ function sendClientMessage(tabId, clientMsg, listenerData, responseCallback) {
   }
   else {
     responseCallback(clientMsg);
-    console.log("no tab id", tabId, clientMsg, listenerData);
   }
 }
 

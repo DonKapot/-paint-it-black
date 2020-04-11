@@ -32,6 +32,7 @@
     },
     "content_scripts": [{
         "matches": ["http://*/*", "https://*/*"],
-        "js": ["src/services/color.js", "src/services/clientListener.js"]
+        "js": ["src/services/color.js", "src/services/clientListener.js"],
+        "css": ["public/css/themes/dark.css"]
     }]
 }

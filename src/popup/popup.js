@@ -5,18 +5,27 @@
  let initDom;
  let isInitDomSet;
 
- function sendClientMessage(msg = "Hello from popup", obj) {
-  let data = {msg, obj};
+ executeClientScript('src/services/parser.js');
+
+ function sendClientMessage(data) {
   chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-    data.tabId = tabs;
     chrome.tabs.sendMessage(tabs[0].id, data);
   });
  }
- function sendBackMessage(subject) {
-  let data = {from: 'POPUP', subject};
+ function sendBackMessage(subject, inputData) {
+  let data = {from: 'POPUP', subject, data: inputData};
   chrome.runtime.sendMessage(data, function(msg) {
-    sendClientMessage(msg)
+    sendClientMessage(data);
   });
+ }
+ function getFunctionBody(f) {
+  let fString = f.toString();
+  return fString
+  .substring(
+    fString.indexOf("{") + 1,
+    fString.lastIndexOf("}")
+  )
+  .trim()
  }
 
  function executeClientScript(callBack) {
@@ -26,9 +35,9 @@
     });
   }
   else {
-    // chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
-    //   chrome.tabs.executeScript(tabs[0].id, { code: 'document.body.style.backgroundColor = "' + color + '";' });
-    // });
+    chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
+      chrome.tabs.executeScript(tabs[0].id, { code: getFunctionBody(callBack) });
+    });
   }
  }
 
@@ -39,34 +48,21 @@ chrome.storage.sync.get('initDom', function(data) {
 });
   
    changeColor.addEventListener('click', (e) => {
-    executeClientScript('src/services/parser.js');
-
-    sendClientMessage("changeColor", initDom);
-
     sendBackMessage('color.change');
-    
-    // chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-    //   chrome.tabs.sendMessage(tabs[0].id, {msg: "changeColor", obj: isInitDomSet});
-    // });
-  
-    // document.body.style.backgroundColor = "red";
-  
-    // let color = e.target.value;
-  
-    //  chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
-    //      chrome.tabs.executeScript(
-    //          tabs[0].id, { code: 'document.body.style.backgroundColor = "' + color + '";' });
-    //  });
-
-    //  chrome.tabs.executeScript(tab.id, {code:
-    //   "document.body.appendChild(document.createElement('link')).href = 'https://example.com/script.js';"
-    // });
+    executeClientScript(function() {
+      {
+        if (!document.body.classList.value.match(' pib-theme')) {
+          document.body.setAttribute('class', document.body.classList.value + ' pib-theme');
+        }
+      }
+    });
    });
   
    resetColor.addEventListener('click', (e) => {
-    executeClientScript('src/services/parser.js');
-
-    sendClientMessage("resetColor", initDom);
-
-    sendBackMessage('color.reset');
+      sendBackMessage('color.reset');
+      executeClientScript(function() {
+        {
+          document.body.setAttribute('class', document.body.classList.value.replace(' pib-theme', ''))
+        }
+      });
    });
